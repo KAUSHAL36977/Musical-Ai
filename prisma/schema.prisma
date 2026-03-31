@@ -43,14 +43,15 @@ model User {
   email         String    @unique
   emailVerified DateTime?
   image         String?
+  password      String?
   credits       Int       @default(10)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  
-  accounts Account[]
-  sessions Session[]
-  tracks   Track[]
-  credits  Credit[]
+
+  accounts      Account[]
+  sessions      Session[]
+  tracks        Track[]
+  creditHistory Credit[]
   languagePacks LanguagePack[]
 }
 
