@@ -8,13 +8,10 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
-        secondary:
-          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        destructive:
-          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-        outline: "text-foreground",
+        default: "",
+        secondary: "",
+        destructive: "",
+        outline: "",
       },
     },
     defaultVariants: {
@@ -27,9 +24,34 @@ export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof badgeVariants> {}
 
-function Badge({ className, variant, ...props }: BadgeProps) {
+const variantStyleMap: Record<string, React.CSSProperties> = {
+  default: {
+    backgroundColor: 'var(--brand-500)',
+    color: 'var(--primary-foreground)',
+    border: 'none',
+  },
+  secondary: {
+    backgroundColor: 'var(--secondary, #eef2ff)',
+    color: 'var(--secondary-foreground, #312e81)',
+    border: 'none'
+  },
+  destructive: {
+    backgroundColor: 'var(--danger, #ef4444)',
+    color: 'var(--primary-foreground)',
+    border: 'none'
+  },
+  outline: {
+    backgroundColor: 'transparent',
+    color: 'var(--foreground)',
+  }
+}
+
+function Badge({ className, variant = 'default', style, ...props }: BadgeProps) {
+  const variantStyle = variantStyleMap[variant as string] || {}
+  const mergedStyle = { ...(variantStyle as React.CSSProperties), ...(style as React.CSSProperties) }
+
   return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
+    <div style={mergedStyle} className={cn(badgeVariants({ variant }), className)} {...props} />
   )
 }
 

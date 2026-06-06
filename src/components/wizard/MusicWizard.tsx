@@ -137,15 +137,15 @@ export default function MusicWizard() {
         )
       case 5:
         return (
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Review Your Choices</h3>
-            <div className="space-y-2 p-4 bg-muted rounded-lg">
-              <p><strong>Genre:</strong> {config.genre} {config.subGenre && `- ${config.subGenre}`}</p>
-              <p><strong>Language:</strong> {config.language}</p>
-              <p><strong>Vibe:</strong> {config.vibe}</p>
-              <p><strong>Duration:</strong> {config.duration} seconds</p>
-              <p><strong>Lyrics Theme:</strong> {config.lyricsPrompt.substring(0, 100)}...</p>
-            </div>
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold">Review Your Choices</h3>
+                <div className="space-y-2 p-4 glass rounded-lg">
+                  <p><strong>Genre:</strong> {config.genre} {config.subGenre && `- ${config.subGenre}`}</p>
+                  <p><strong>Language:</strong> {config.language}</p>
+                  <p><strong>Vibe:</strong> {config.vibe}</p>
+                  <p><strong>Duration:</strong> {config.duration} seconds</p>
+                  <p><strong>Lyrics Theme:</strong> {config.lyricsPrompt.substring(0, 100)}...</p>
+                </div>
             <Button
               onClick={handleGenerate}
               className="w-full"
@@ -166,7 +166,7 @@ export default function MusicWizard() {
   }
 
   return (
-    <Card className="max-w-4xl mx-auto">
+    <Card className="max-w-4xl mx-auto glass">
       <CardHeader>
         <CardTitle>Music Generation Wizard</CardTitle>
         <StepIndicator steps={STEPS} currentStep={currentStep} />

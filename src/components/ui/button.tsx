@@ -8,9 +8,9 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default: "hover:brightness-95",
         ghost: "bg-transparent hover:bg-accent",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        destructive: "hover:brightness-95",
         outline: "border bg-transparent",
       },
       size: {
@@ -30,10 +30,41 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {}
 
+const variantStyleMap: Record<string, React.CSSProperties> = {
+  default: {
+    backgroundColor: 'var(--brand-500)',
+    color: 'var(--primary-foreground)',
+    border: 'none',
+  },
+  ghost: {
+    backgroundColor: 'transparent',
+    color: 'var(--foreground)'
+  },
+  destructive: {
+    backgroundColor: 'var(--danger)',
+    color: 'var(--primary-foreground)'
+  },
+  outline: {
+    backgroundColor: 'transparent',
+    color: 'var(--foreground)',
+    border: '1px solid rgba(0,0,0,0.08)'
+  }
+}
+
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => (
-    <button ref={ref} className={cn(buttonVariants({ variant, size }), className)} {...props} />
-  )
+  ({ className, variant = 'default', size, style, ...props }, ref) => {
+    const variantStyle = variantStyleMap[variant as string] || {}
+    const mergedStyle = { ...(variantStyle as React.CSSProperties), ...(style as React.CSSProperties) }
+
+    return (
+      <button
+        ref={ref}
+        style={mergedStyle}
+        className={cn(buttonVariants({ variant, size }), className)}
+        {...props}
+      />
+    )
+  }
 )
 
 Button.displayName = "Button"

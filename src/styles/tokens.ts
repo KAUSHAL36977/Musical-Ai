@@ -7,6 +7,19 @@ export const tokens = {
     'muted-foreground': '#9ca3af',
     background: '#ffffff',
     foreground: '#171717',
+    // ramps
+    'gray-50': '#f9fafb',
+    'gray-100': '#f3f4f6',
+    'gray-200': '#e5e7eb',
+    'gray-300': '#d1d5db',
+    'gray-400': '#9ca3af',
+    'gray-500': '#6b7280',
+    success: '#16a34a',
+    danger: '#ef4444',
+    // dark mode overrides
+    darkBackground: '#0a0a0a',
+    darkForeground: '#f3f4f6',
+    darkSurface: '#0f1724',
   },
   space: {
     '1': '4px',
@@ -15,16 +28,19 @@ export const tokens = {
     '4': '16px',
     '5': '24px',
     '6': '32px',
+    '8': '48px',
   },
   radii: {
     sm: '6px',
     md: '8px',
     lg: '12px',
+    full: '9999px',
   },
   motion: {
     fast: '100ms',
     medium: '250ms',
     long: '500ms',
+    easing: 'cubic-bezier(0.2, 0.9, 0.2, 1)'
   },
   typography: {
     h1: '36px',
@@ -33,11 +49,20 @@ export const tokens = {
     body: '16px',
     caption: '12px',
   },
+  shadows: {
+    elevation1: '0 6px 18px rgba(15, 23, 42, 0.08)',
+    elevation2: '0 12px 30px rgba(15, 23, 42, 0.12)',
+  },
+  glass: {
+    blurSm: '8px',
+    blurMd: '16px',
+    opacity: '0.55',
+    tint: 'rgba(255,255,255,0.06)'
+  }
 }
 
 export const cssVars = `:root {
   --brand-500: ${tokens.colors.primary};
-  --primary: ${tokens.colors.primary};
   --primary-foreground: ${tokens.colors['primary-foreground']};
   --muted-foreground: ${tokens.colors['muted-foreground']};
   --space-1: ${tokens.space['1']};
@@ -46,6 +71,9 @@ export const cssVars = `:root {
   --space-4: ${tokens.space['4']};
   --radius-md: ${tokens.radii.md};
   --motion-fast: ${tokens.motion.fast};
+  --glass-blur-sm: ${tokens.glass.blurSm};
+  --glass-blur-md: ${tokens.glass.blurMd};
+  --glass-opacity: ${tokens.glass.opacity};
 }`
 
 export default tokens

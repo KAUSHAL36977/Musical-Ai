@@ -27,7 +27,12 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
           onValueChange?.([newVal])
           props.onChange?.(e as any)
         }}
-        className={cn("w-full", className)}
+        className={cn('w-full', className)}
+        style={{
+          accentColor: 'var(--brand-500)',
+          height: 8,
+          background: 'var(--gray-200)'
+        }}
         {...(props as any)}
       />
     )

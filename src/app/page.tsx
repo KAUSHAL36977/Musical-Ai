@@ -5,9 +5,9 @@ import { Music, Sparkles, Zap } from 'lucide-react'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm">
+      <header className="border-b glass-strong">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -41,7 +41,7 @@ export default function Home() {
         </div>
 
         <Suspense fallback={
-          <Card className="max-w-4xl mx-auto">
+          <Card className="max-w-4xl mx-auto glass">
             <CardContent className="p-8">
               <div className="flex items-center justify-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -55,7 +55,7 @@ export default function Home() {
 
         {/* Features */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card>
+          <Card className="glass">
             <CardHeader>
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-2">
                 <Music className="h-6 w-6 text-blue-600" />
@@ -69,7 +69,7 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="glass">
             <CardHeader>
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-2">
                 <Sparkles className="h-6 w-6 text-purple-600" />
@@ -83,7 +83,7 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="glass">
             <CardHeader>
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-2">
                 <Zap className="h-6 w-6 text-green-600" />
@@ -100,7 +100,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t bg-white/80 backdrop-blur-sm mt-16">
+      <footer className="border-t glass mt-16">
         <div className="container mx-auto px-4 py-6">
           <div className="text-center text-sm text-muted-foreground">
             <p>&copy; 2024 Musical AI. Powered by advanced AI technology.</p>

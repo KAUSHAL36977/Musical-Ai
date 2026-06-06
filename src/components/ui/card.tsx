@@ -3,8 +3,16 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
-const Card = ({ className, ...props }: CardProps) => (
-  <div className={cn("rounded-lg border bg-white shadow-sm", className)} {...props} />
+const Card = ({ className, style, ...props }: CardProps) => (
+  <div
+    style={{
+      backgroundColor: 'var(--background)',
+      boxShadow: 'var(--elevation-1)',
+      ...(style as React.CSSProperties)
+    }}
+    className={cn('rounded-lg border', className)}
+    {...props}
+  />
 )
 
 interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
