@@ -1,13 +1,23 @@
 import { Suspense } from 'react'
+import { motion } from 'framer-motion'
 import MusicWizard from '@/components/wizard/MusicWizard'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Music, Sparkles, Zap } from 'lucide-react'
+import { AmbientParticles, AmbientGradient, AnimatedContainer, AnimatedItem, PageTransition } from '@/components/motion/AnimatedComponents'
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <header className="border-b glass-strong">
+    <PageTransition>
+      <AmbientGradient />
+      <AmbientParticles count={25} />
+      <div className="min-h-screen relative">
+        {/* Header */}
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="border-b glass-strong"
+        >
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -26,19 +36,24 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </header>
+        </motion.header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-4">
+        {/* Main Content */}
+        <main className="container mx-auto px-4 py-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-center mb-8"
+          >
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
             Create Your Perfect Music
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Use our step-by-step wizard to generate custom AI music tailored to your preferences. 
-            Choose genre, language, vibe, and more!
-          </p>
-        </div>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Use our step-by-step wizard to generate custom AI music tailored to your preferences. 
+              Choose genre, language, vibe, and more!
+            </p>
+          </motion.div>
 
         <Suspense fallback={
           <Card className="max-w-4xl mx-auto glass">
@@ -54,8 +69,13 @@ export default function Home() {
         </Suspense>
 
         {/* Features */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="glass">
+        <AnimatedContainer className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <AnimatedItem>
+            <motion.div
+              whileHover={{ scale: 1.05, y: -10 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+            >
+              <Card className="glass h-full">
             <CardHeader>
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-2">
                 <Music className="h-6 w-6 text-blue-600" />
@@ -67,9 +87,23 @@ export default function Home() {
                 Choose from Rap, Rock, Pop, Electronic, Classical, Jazz, and more with sub-genre options.
               </p>
             </CardContent>
-          </Card>
+            </Card>
+            </motion.div>
+          </AnimatedItem>
 
-          <Card className="glass">
+          <AnimatedItem>
+            <motion.div
+              whileHover={{ scale: 1.05, y: -10 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+            >
+              <Card className="glass h-full">
+
+          <AnimatedItem>
+            <motion.div
+              whileHover={{ scale: 1.05, y: -10 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+            >
+              <Card className="glass h-full">
             <CardHeader>
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-2">
                 <Sparkles className="h-6 w-6 text-purple-600" />
@@ -95,18 +129,26 @@ export default function Home() {
                 Generate professional-quality music in seconds with our optimized AI models.
               </p>
             </CardContent>
-          </Card>
-        </div>
+            </Card>
+            </motion.div>
+          </AnimatedItem>
+        </AnimatedContainer>
       </main>
 
       {/* Footer */}
-      <footer className="border-t glass mt-16">
+      <motion.footer
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="border-t glass mt-16 relative z-10"
+      >
         <div className="container mx-auto px-4 py-6">
           <div className="text-center text-sm text-muted-foreground">
             <p>&copy; 2024 Musical AI. Powered by advanced AI technology.</p>
           </div>
         </div>
-      </footer>
-    </div>
+      </motion.footer>
+      </div>
+    </PageTransition>
   )
 }
