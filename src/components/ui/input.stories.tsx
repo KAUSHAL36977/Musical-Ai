@@ -19,3 +19,10 @@ export const Disabled = () => (
     <Input placeholder="Disabled" disabled />
   </div>
 )
+
+export const Invalid = () => (
+  <div style={{ width: 360 }}>
+    <Label htmlFor="invalid">Email</Label>
+    <Input id="invalid" placeholder="Invalid email" aria-invalid="true" style={{ borderColor: 'var(--danger)' }} />
+  </div>
+)
