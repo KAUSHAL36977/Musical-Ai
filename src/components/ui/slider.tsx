@@ -22,6 +22,9 @@ const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
         max={max}
         step={step}
         value={innerValue}
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-valuenow={innerValue}
         onChange={(e) => {
           const newVal = Number((e.target as HTMLInputElement).value)
           onValueChange?.([newVal])
