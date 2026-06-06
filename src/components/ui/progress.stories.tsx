@@ -4,10 +4,14 @@ import { Progress } from './progress'
 export default {
   title: 'UI/Progress',
   component: Progress,
+  argTypes: {
+    value: { control: { type: 'range', min: 0, max: 100 } },
+  },
 }
 
-export const Default = () => (
+export const Playground = (args: any) => (
   <div style={{ width: 360 }}>
-    <Progress value={55} />
+    <Progress {...args} />
   </div>
 )
+Playground.args = { value: 55 }
