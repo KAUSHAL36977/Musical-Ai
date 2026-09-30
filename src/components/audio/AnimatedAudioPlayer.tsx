@@ -34,7 +34,7 @@ export const AnimatedAudioPlayer: React.FC<AudioPlayerProps> = ({
   useEffect(() => {
     if (!audioRef.current) return
 
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+    const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)()
     const analyser = audioContext.createAnalyser()
     const source = audioContext.createMediaElementAudioSource(audioRef.current)
 
@@ -177,6 +177,7 @@ export const AnimatedAudioPlayer: React.FC<AudioPlayerProps> = ({
               setCurrentTime(value[0])
             }
           }}
+          aria-label="Seek time"
         />
         <div className="flex justify-between text-xs text-white/60">
           <span>{formatTime(currentTime)}</span>
@@ -191,7 +192,7 @@ export const AnimatedAudioPlayer: React.FC<AudioPlayerProps> = ({
         transition={{ delay: 0.4 }}
         className="flex items-center justify-center gap-4"
       >
-        <Button variant="ghost" size="sm" disabled>
+        <Button variant="ghost" size="sm" disabled aria-label="Skip back">
           <SkipBack className="w-5 h-5" />
         </Button>
 
@@ -203,6 +204,7 @@ export const AnimatedAudioPlayer: React.FC<AudioPlayerProps> = ({
             onClick={togglePlayPause}
             className="rounded-full w-12 h-12 flex items-center justify-center"
             disabled={!src}
+            aria-label={isPlaying ? 'Pause' : 'Play'}
           >
             {isPlaying ? (
               <Pause className="w-6 h-6" />
@@ -212,7 +214,7 @@ export const AnimatedAudioPlayer: React.FC<AudioPlayerProps> = ({
           </Button>
         </motion.div>
 
-        <Button variant="ghost" size="sm" disabled>
+        <Button variant="ghost" size="sm" disabled aria-label="Skip forward">
           <SkipForward className="w-5 h-5" />
         </Button>
       </motion.div>
@@ -237,6 +239,7 @@ export const AnimatedAudioPlayer: React.FC<AudioPlayerProps> = ({
               audioRef.current.volume = vol
             }
           }}
+          aria-label="Volume"
         />
       </motion.div>
 
