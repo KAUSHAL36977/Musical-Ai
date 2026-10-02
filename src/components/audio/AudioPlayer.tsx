@@ -111,6 +111,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             max={duration || 1}
             step={0.1}
             onValueChange={handleSeek}
+            aria-label="Audio track progress"
             className="flex-1"
           />
           <span className="text-sm text-muted-foreground w-12">
@@ -123,6 +124,8 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
           <Button
             variant="ghost"
             size="icon"
+            aria-label="Rewind 10 seconds"
+            title="Rewind 10 seconds"
             onClick={() => handleSeek([Math.max(0, currentTime - 10)])}
           >
             <SkipBack className="h-5 w-5" />
@@ -132,6 +135,8 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             size="lg"
             variant="default"
             className="rounded-full w-14 h-14"
+            aria-label={isPlaying ? 'Pause track' : 'Play track'}
+            title={isPlaying ? 'Pause' : 'Play'}
             onClick={togglePlayPause}
           >
             {isPlaying ? (
@@ -144,6 +149,8 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
           <Button
             variant="ghost"
             size="icon"
+            aria-label="Fast forward 10 seconds"
+            title="Fast forward 10 seconds"
             onClick={() => handleSeek([Math.min(duration, currentTime + 10)])}
           >
             <SkipForward className="h-5 w-5" />
@@ -153,17 +160,23 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
         {/* Volume and Download */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 w-48">
-            <Volume2 className="h-5 w-5" />
+            <Volume2 className="h-5 w-5 text-muted-foreground" aria-hidden="true" />
             <Slider
               value={[volume]}
               max={1}
               step={0.01}
               onValueChange={handleVolumeChange}
+              aria-label="Volume"
               className="flex-1"
             />
           </div>
 
-          <Button onClick={handleDownload} variant="outline">
+          <Button
+            onClick={handleDownload}
+            variant="outline"
+            aria-label={`Download ${title}`}
+            title={`Download ${title}`}
+          >
             <Download className="h-4 w-4 mr-2" />
             Download
           </Button>
