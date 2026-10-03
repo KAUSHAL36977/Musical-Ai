@@ -1,7 +1,7 @@
 'use client'
 
+import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
 interface VibeSelectorProps {
@@ -36,10 +36,19 @@ export default function VibeSelector({ value, onChange }: VibeSelectorProps) {
           {VIBES.map((vibe) => (
             <Card 
               key={vibe.id}
-              className={`cursor-pointer transition-all hover:shadow-md ${
+              role="button"
+              tabIndex={0}
+              aria-pressed={value === vibe.id}
+              className={`cursor-pointer transition-all hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                 value === vibe.id ? 'ring-2 ring-primary' : ''
               }`}
               onClick={() => onChange(vibe.id)}
+              onKeyDown={(e: React.KeyboardEvent) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  onChange(vibe.id)
+                }
+              }}
             >
               <CardContent className="p-4">
                 <h4 className="font-medium mb-2">{vibe.name}</h4>
