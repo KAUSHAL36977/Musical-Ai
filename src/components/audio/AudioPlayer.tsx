@@ -112,6 +112,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             step={0.1}
             onValueChange={handleSeek}
             className="flex-1"
+            aria-label="Audio progress"
           />
           <span className="text-sm text-muted-foreground w-12">
             {formatTime(duration)}
@@ -123,6 +124,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
           <Button
             variant="ghost"
             size="icon"
+            aria-label="Rewind 10 seconds"
             onClick={() => handleSeek([Math.max(0, currentTime - 10)])}
           >
             <SkipBack className="h-5 w-5" />
@@ -131,6 +133,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
           <Button
             size="lg"
             variant="default"
+            aria-label={isPlaying ? 'Pause' : 'Play'}
             className="rounded-full w-14 h-14"
             onClick={togglePlayPause}
           >
@@ -144,6 +147,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
           <Button
             variant="ghost"
             size="icon"
+            aria-label="Skip forward 10 seconds"
             onClick={() => handleSeek([Math.min(duration, currentTime + 10)])}
           >
             <SkipForward className="h-5 w-5" />
@@ -160,6 +164,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
               step={0.01}
               onValueChange={handleVolumeChange}
               className="flex-1"
+              aria-label="Volume"
             />
           </div>
 
