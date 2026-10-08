@@ -101,7 +101,7 @@ export default function LyricsInput({ value, additionalPrompts, onChange }: Lyri
                 onChange={(e) => setNewPrompt(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleAddPrompt()}
               />
-              <Button onClick={handleAddPrompt} size="sm">
+              <Button onClick={handleAddPrompt} size="sm" aria-label="Add requirement">
                 <Plus className="h-4 w-4" />
               </Button>
             </div>
@@ -118,10 +118,14 @@ export default function LyricsInput({ value, additionalPrompts, onChange }: Lyri
                     className="flex items-center space-x-1"
                   >
                     <span>{prompt}</span>
-                    <X
-                      className="h-3 w-3 cursor-pointer hover:text-destructive"
+                    <button
+                      type="button"
                       onClick={() => handleRemovePrompt(index)}
-                    />
+                      className="inline-flex items-center justify-center text-muted-foreground hover:text-destructive rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                      aria-label={`Remove requirement: ${prompt}`}
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
                   </Badge>
                 ))}
               </div>
