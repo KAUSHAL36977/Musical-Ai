@@ -112,6 +112,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             step={0.1}
             onValueChange={handleSeek}
             className="flex-1"
+            aria-label="Track progress"
           />
           <span className="text-sm text-muted-foreground w-12">
             {formatTime(duration)}
@@ -122,8 +123,10 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
         <div className="flex items-center justify-center gap-4">
           <Button
             variant="ghost"
-            size="icon"
+            size="sm"
             onClick={() => handleSeek([Math.max(0, currentTime - 10)])}
+            aria-label="Rewind 10 seconds"
+            title="Rewind 10 seconds"
           >
             <SkipBack className="h-5 w-5" />
           </Button>
@@ -133,6 +136,8 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             variant="default"
             className="rounded-full w-14 h-14"
             onClick={togglePlayPause}
+            aria-label={isPlaying ? "Pause track" : "Play track"}
+            title={isPlaying ? "Pause" : "Play"}
           >
             {isPlaying ? (
               <Pause className="h-6 w-6" />
@@ -143,8 +148,10 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
 
           <Button
             variant="ghost"
-            size="icon"
+            size="sm"
             onClick={() => handleSeek([Math.min(duration, currentTime + 10)])}
+            aria-label="Skip forward 10 seconds"
+            title="Skip forward 10 seconds"
           >
             <SkipForward className="h-5 w-5" />
           </Button>
@@ -153,13 +160,14 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
         {/* Volume and Download */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 w-48">
-            <Volume2 className="h-5 w-5" />
+            <Volume2 className="h-5 w-5 text-muted-foreground" aria-hidden="true" />
             <Slider
               value={[volume]}
               max={1}
               step={0.01}
               onValueChange={handleVolumeChange}
               className="flex-1"
+              aria-label="Volume level"
             />
           </div>
 
