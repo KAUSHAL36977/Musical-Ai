@@ -97,6 +97,20 @@ export default function Home() {
               transition={{ type: 'spring', stiffness: 300, damping: 10 }}
             >
               <Card className="glass h-full">
+                <CardHeader>
+                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-2">
+                    <Sparkles className="h-6 w-6 text-purple-600" />
+                  </div>
+                  <CardTitle className="text-lg">AI-Powered</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Advanced AI technology creates unique compositions based on your preferences and mood.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </AnimatedItem>
 
           <AnimatedItem>
             <motion.div
@@ -104,32 +118,18 @@ export default function Home() {
               transition={{ type: 'spring', stiffness: 300, damping: 10 }}
             >
               <Card className="glass h-full">
-            <CardHeader>
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-2">
-                <Sparkles className="h-6 w-6 text-purple-600" />
-              </div>
-              <CardTitle className="text-lg">AI-Powered</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                Advanced AI technology creates unique compositions based on your preferences and mood.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="glass">
-            <CardHeader>
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-2">
-                <Zap className="h-6 w-6 text-green-600" />
-              </div>
-              <CardTitle className="text-lg">Instant Generation</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                Generate professional-quality music in seconds with our optimized AI models.
-              </p>
-            </CardContent>
-            </Card>
+                <CardHeader>
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-2">
+                    <Zap className="h-6 w-6 text-green-600" />
+                  </div>
+                  <CardTitle className="text-lg">Instant Generation</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Generate professional-quality music in seconds with our optimized AI models.
+                  </p>
+                </CardContent>
+              </Card>
             </motion.div>
           </AnimatedItem>
         </AnimatedContainer>
