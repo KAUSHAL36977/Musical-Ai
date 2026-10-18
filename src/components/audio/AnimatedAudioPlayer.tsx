@@ -171,6 +171,7 @@ export const AnimatedAudioPlayer: React.FC<AudioPlayerProps> = ({
           min={0}
           max={duration || 0}
           step={0.1}
+          aria-label="Seek time"
           onValueChange={(value) => {
             if (audioRef.current) {
               audioRef.current.currentTime = value[0]
@@ -191,7 +192,7 @@ export const AnimatedAudioPlayer: React.FC<AudioPlayerProps> = ({
         transition={{ delay: 0.4 }}
         className="flex items-center justify-center gap-4"
       >
-        <Button variant="ghost" size="sm" disabled>
+        <Button variant="ghost" size="sm" disabled aria-label="Previous track">
           <SkipBack className="w-5 h-5" />
         </Button>
 
@@ -203,6 +204,7 @@ export const AnimatedAudioPlayer: React.FC<AudioPlayerProps> = ({
             onClick={togglePlayPause}
             className="rounded-full w-12 h-12 flex items-center justify-center"
             disabled={!src}
+            aria-label={isPlaying ? 'Pause' : 'Play'}
           >
             {isPlaying ? (
               <Pause className="w-6 h-6" />
@@ -212,7 +214,7 @@ export const AnimatedAudioPlayer: React.FC<AudioPlayerProps> = ({
           </Button>
         </motion.div>
 
-        <Button variant="ghost" size="sm" disabled>
+        <Button variant="ghost" size="sm" disabled aria-label="Next track">
           <SkipForward className="w-5 h-5" />
         </Button>
       </motion.div>
@@ -230,6 +232,7 @@ export const AnimatedAudioPlayer: React.FC<AudioPlayerProps> = ({
           min={0}
           max={100}
           step={1}
+          aria-label="Volume"
           onValueChange={(value) => {
             const vol = value[0] / 100
             setVolume(vol)
