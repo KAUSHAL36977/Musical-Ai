@@ -107,6 +107,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             {formatTime(currentTime)}
           </span>
           <Slider
+            aria-label="Track progress"
             value={[currentTime]}
             max={duration || 1}
             step={0.1}
@@ -123,38 +124,42 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
           <Button
             variant="ghost"
             size="icon"
+            aria-label="Seek backward 10 seconds"
             onClick={() => handleSeek([Math.max(0, currentTime - 10)])}
           >
-            <SkipBack className="h-5 w-5" />
+            <SkipBack className="h-5 w-5" aria-hidden="true" />
           </Button>
 
           <Button
             size="lg"
             variant="default"
             className="rounded-full w-14 h-14"
+            aria-label={isPlaying ? "Pause track" : "Play track"}
             onClick={togglePlayPause}
           >
             {isPlaying ? (
-              <Pause className="h-6 w-6" />
+              <Pause className="h-6 w-6" aria-hidden="true" />
             ) : (
-              <Play className="h-6 w-6 ml-1" />
+              <Play className="h-6 w-6 ml-1" aria-hidden="true" />
             )}
           </Button>
 
           <Button
             variant="ghost"
             size="icon"
+            aria-label="Seek forward 10 seconds"
             onClick={() => handleSeek([Math.min(duration, currentTime + 10)])}
           >
-            <SkipForward className="h-5 w-5" />
+            <SkipForward className="h-5 w-5" aria-hidden="true" />
           </Button>
         </div>
 
         {/* Volume and Download */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 w-48">
-            <Volume2 className="h-5 w-5" />
+            <Volume2 className="h-5 w-5" aria-hidden="true" />
             <Slider
+              aria-label="Volume"
               value={[volume]}
               max={1}
               step={0.01}
@@ -164,7 +169,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
           </div>
 
           <Button onClick={handleDownload} variant="outline">
-            <Download className="h-4 w-4 mr-2" />
+            <Download className="h-4 w-4 mr-2" aria-hidden="true" />
             Download
           </Button>
         </div>
