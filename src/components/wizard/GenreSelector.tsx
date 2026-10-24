@@ -59,16 +59,26 @@ export default function GenreSelector({ value, subGenre, onChange }: GenreSelect
         <div>
           <h4 className="text-md font-medium mb-3">Select Sub-Genre (Optional)</h4>
           <div className="flex flex-wrap gap-2">
-            {GENRES[value as keyof typeof GENRES].map((sub) => (
-              <Badge
-                key={sub}
-                variant={selectedSubGenre === sub ? "default" : "outline"}
-                className="cursor-pointer px-3 py-1"
-                onClick={() => handleSubGenreSelect(sub)}
-              >
-                {sub}
-              </Badge>
-            ))}
+            {GENRES[value as keyof typeof GENRES].map((sub) => {
+              const isSelected = selectedSubGenre === sub
+              return (
+                <button
+                  key={sub}
+                  type="button"
+                  aria-pressed={isSelected}
+                  aria-label={`Sub-genre: ${sub}`}
+                  onClick={() => handleSubGenreSelect(sub)}
+                  className="focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-full"
+                >
+                  <Badge
+                    variant={isSelected ? "default" : "outline"}
+                    className="cursor-pointer px-3 py-1"
+                  >
+                    {sub}
+                  </Badge>
+                </button>
+              )
+            })}
           </div>
         </div>
       )}
