@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
-import { Play, Pause, Download, SkipBack, SkipForward, Volume2 } from 'lucide-react'
+import { Play, Pause, Download, SkipBack, SkipForward, Volume2, VolumeX } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -19,6 +19,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(1)
+  const [prevVolume, setPrevVolume] = useState(1)
 
   useEffect(() => {
     const audio = audioRef.current
@@ -63,6 +64,23 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
     if (!audio) return
     audio.volume = value[0]
     setVolume(value[0])
+    if (value[0] > 0) {
+      setPrevVolume(value[0])
+    }
+  }
+
+  const toggleMute = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    if (volume > 0) {
+      setPrevVolume(volume)
+      audio.volume = 0
+      setVolume(0)
+    } else {
+      const newVol = prevVolume > 0 ? prevVolume : 1
+      audio.volume = newVol
+      setVolume(newVol)
+    }
   }
 
   const handleDownload = async () => {
@@ -112,6 +130,8 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             step={0.1}
             onValueChange={handleSeek}
             className="flex-1"
+            aria-label="Track progress"
+            aria-valuetext={`${formatTime(currentTime)} of ${formatTime(duration)}`}
           />
           <span className="text-sm text-muted-foreground w-12">
             {formatTime(duration)}
@@ -122,8 +142,11 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
         <div className="flex items-center justify-center gap-4">
           <Button
             variant="ghost"
-            size="icon"
+            size="sm"
+            className="h-10 w-10 p-0"
             onClick={() => handleSeek([Math.max(0, currentTime - 10)])}
+            aria-label="Rewind 10 seconds"
+            title="Rewind 10s"
           >
             <SkipBack className="h-5 w-5" />
           </Button>
@@ -133,6 +156,8 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             variant="default"
             className="rounded-full w-14 h-14"
             onClick={togglePlayPause}
+            aria-label={isPlaying ? 'Pause track' : 'Play track'}
+            title={isPlaying ? 'Pause' : 'Play'}
           >
             {isPlaying ? (
               <Pause className="h-6 w-6" />
@@ -143,8 +168,11 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
 
           <Button
             variant="ghost"
-            size="icon"
+            size="sm"
+            className="h-10 w-10 p-0"
             onClick={() => handleSeek([Math.min(duration, currentTime + 10)])}
+            aria-label="Fast forward 10 seconds"
+            title="Fast forward 10s"
           >
             <SkipForward className="h-5 w-5" />
           </Button>
@@ -153,13 +181,28 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
         {/* Volume and Download */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 w-48">
-            <Volume2 className="h-5 w-5" />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleMute}
+              aria-label={volume === 0 ? 'Unmute audio' : 'Mute audio'}
+              title={volume === 0 ? 'Unmute' : 'Mute'}
+              className="h-8 w-8 p-0"
+            >
+              {volume === 0 ? (
+                <VolumeX className="h-5 w-5" />
+              ) : (
+                <Volume2 className="h-5 w-5" />
+              )}
+            </Button>
             <Slider
               value={[volume]}
               max={1}
               step={0.01}
               onValueChange={handleVolumeChange}
               className="flex-1"
+              aria-label="Volume"
+              aria-valuetext={`${Math.round(volume * 100)}%`}
             />
           </div>
 
