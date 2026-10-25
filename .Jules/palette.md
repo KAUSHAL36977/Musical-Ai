@@ -1,0 +1,3 @@
+## 2026-10-25 - Interactive Audio Player Mute Toggle & Slider ARIA Context
+**Learning:** Icon-only media player controls and range sliders (track seek and volume) lack screen-reader context (`aria-label`, `aria-valuetext`) by default. Converting static volume icons to interactive toggle buttons with volume restoration memory (`prevVolume`) provides an intuitive mute shortcut while enhancing screen reader navigation.
+**Action:** Always provide explicit `aria-label` and `aria-valuetext` on range input sliders, and make media status icons interactive buttons with `aria-label` and `title` tooltips.
