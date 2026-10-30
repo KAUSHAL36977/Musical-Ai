@@ -112,6 +112,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             step={0.1}
             onValueChange={handleSeek}
             className="flex-1"
+            aria-label="Seek track position"
           />
           <span className="text-sm text-muted-foreground w-12">
             {formatTime(duration)}
@@ -124,8 +125,10 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             variant="ghost"
             size="icon"
             onClick={() => handleSeek([Math.max(0, currentTime - 10)])}
+            aria-label="Rewind 10 seconds"
+            title="Rewind 10 seconds"
           >
-            <SkipBack className="h-5 w-5" />
+            <SkipBack className="h-5 w-5" aria-hidden="true" />
           </Button>
 
           <Button
@@ -133,11 +136,13 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             variant="default"
             className="rounded-full w-14 h-14"
             onClick={togglePlayPause}
+            aria-label={isPlaying ? "Pause track" : "Play track"}
+            title={isPlaying ? "Pause track" : "Play track"}
           >
             {isPlaying ? (
-              <Pause className="h-6 w-6" />
+              <Pause className="h-6 w-6" aria-hidden="true" />
             ) : (
-              <Play className="h-6 w-6 ml-1" />
+              <Play className="h-6 w-6 ml-1" aria-hidden="true" />
             )}
           </Button>
 
@@ -145,26 +150,29 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             variant="ghost"
             size="icon"
             onClick={() => handleSeek([Math.min(duration, currentTime + 10)])}
+            aria-label="Fast forward 10 seconds"
+            title="Fast forward 10 seconds"
           >
-            <SkipForward className="h-5 w-5" />
+            <SkipForward className="h-5 w-5" aria-hidden="true" />
           </Button>
         </div>
 
         {/* Volume and Download */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 w-48">
-            <Volume2 className="h-5 w-5" />
+            <Volume2 className="h-5 w-5" aria-hidden="true" />
             <Slider
               value={[volume]}
               max={1}
               step={0.01}
               onValueChange={handleVolumeChange}
               className="flex-1"
+              aria-label="Volume level"
             />
           </div>
 
-          <Button onClick={handleDownload} variant="outline">
-            <Download className="h-4 w-4 mr-2" />
+          <Button onClick={handleDownload} variant="outline" aria-label="Download track audio file">
+            <Download className="h-4 w-4 mr-2" aria-hidden="true" />
             Download
           </Button>
         </div>
