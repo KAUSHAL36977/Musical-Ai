@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
-import { Play, Pause, Download, SkipBack, SkipForward, Volume2 } from 'lucide-react'
+import { Play, Pause, Download, SkipBack, SkipForward, Volume2, VolumeX } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -19,6 +19,8 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(1)
+  const [isMuted, setIsMuted] = useState(false)
+  const [previousVolume, setPreviousVolume] = useState(1)
 
   useEffect(() => {
     const audio = audioRef.current
@@ -61,8 +63,28 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
   const handleVolumeChange = (value: number[]) => {
     const audio = audioRef.current
     if (!audio) return
-    audio.volume = value[0]
-    setVolume(value[0])
+    const newVol = value[0]
+    audio.volume = newVol
+    setVolume(newVol)
+    if (newVol > 0 && isMuted) {
+      setIsMuted(false)
+    }
+  }
+
+  const toggleMute = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    if (isMuted || volume === 0) {
+      const restoredVol = previousVolume > 0 ? previousVolume : 1
+      audio.volume = restoredVol
+      setVolume(restoredVol)
+      setIsMuted(false)
+    } else {
+      setPreviousVolume(volume)
+      audio.volume = 0
+      setVolume(0)
+      setIsMuted(true)
+    }
   }
 
   const handleDownload = async () => {
@@ -111,6 +133,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             max={duration || 1}
             step={0.1}
             onValueChange={handleSeek}
+            aria-label="Audio progress"
             className="flex-1"
           />
           <span className="text-sm text-muted-foreground w-12">
@@ -124,6 +147,8 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             variant="ghost"
             size="icon"
             onClick={() => handleSeek([Math.max(0, currentTime - 10)])}
+            aria-label="Rewind 10 seconds"
+            title="Rewind 10 seconds"
           >
             <SkipBack className="h-5 w-5" />
           </Button>
@@ -133,6 +158,8 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             variant="default"
             className="rounded-full w-14 h-14"
             onClick={togglePlayPause}
+            aria-label={isPlaying ? "Pause track" : "Play track"}
+            title={isPlaying ? "Pause track" : "Play track"}
           >
             {isPlaying ? (
               <Pause className="h-6 w-6" />
@@ -145,6 +172,8 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             variant="ghost"
             size="icon"
             onClick={() => handleSeek([Math.min(duration, currentTime + 10)])}
+            aria-label="Skip forward 10 seconds"
+            title="Skip forward 10 seconds"
           >
             <SkipForward className="h-5 w-5" />
           </Button>
@@ -153,12 +182,26 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
         {/* Volume and Download */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 w-48">
-            <Volume2 className="h-5 w-5" />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-muted-foreground hover:text-foreground"
+              onClick={toggleMute}
+              aria-label={isMuted || volume === 0 ? "Unmute audio" : "Mute audio"}
+              title={isMuted || volume === 0 ? "Unmute audio" : "Mute audio"}
+            >
+              {isMuted || volume === 0 ? (
+                <VolumeX className="h-5 w-5" />
+              ) : (
+                <Volume2 className="h-5 w-5" />
+              )}
+            </Button>
             <Slider
               value={[volume]}
               max={1}
               step={0.01}
               onValueChange={handleVolumeChange}
+              aria-label="Volume"
               className="flex-1"
             />
           </div>
