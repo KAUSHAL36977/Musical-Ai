@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
-import { Play, Pause, Download, SkipBack, SkipForward, Volume2 } from 'lucide-react'
+import { Play, Pause, Download, SkipBack, SkipForward, Volume2, VolumeX } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -19,6 +19,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(1)
+  const [prevVolume, setPrevVolume] = useState(1)
 
   useEffect(() => {
     const audio = audioRef.current
@@ -63,6 +64,23 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
     if (!audio) return
     audio.volume = value[0]
     setVolume(value[0])
+    if (value[0] > 0) {
+      setPrevVolume(value[0])
+    }
+  }
+
+  const toggleMute = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    if (volume > 0) {
+      setPrevVolume(volume)
+      audio.volume = 0
+      setVolume(0)
+    } else {
+      const restored = prevVolume > 0 ? prevVolume : 1
+      audio.volume = restored
+      setVolume(restored)
+    }
   }
 
   const handleDownload = async () => {
@@ -110,6 +128,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
             value={[currentTime]}
             max={duration || 1}
             step={0.1}
+            aria-label="Track progress"
             onValueChange={handleSeek}
             className="flex-1"
           />
@@ -123,6 +142,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
           <Button
             variant="ghost"
             size="icon"
+            aria-label="Rewind 10 seconds"
             onClick={() => handleSeek([Math.max(0, currentTime - 10)])}
           >
             <SkipBack className="h-5 w-5" />
@@ -131,6 +151,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
           <Button
             size="lg"
             variant="default"
+            aria-label={isPlaying ? 'Pause' : 'Play'}
             className="rounded-full w-14 h-14"
             onClick={togglePlayPause}
           >
@@ -144,6 +165,7 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
           <Button
             variant="ghost"
             size="icon"
+            aria-label="Fast forward 10 seconds"
             onClick={() => handleSeek([Math.min(duration, currentTime + 10)])}
           >
             <SkipForward className="h-5 w-5" />
@@ -153,17 +175,30 @@ export default function AudioPlayer({ audioUrl, title, trackId }: AudioPlayerPro
         {/* Volume and Download */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 w-48">
-            <Volume2 className="h-5 w-5" />
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label={volume === 0 ? 'Unmute' : 'Mute'}
+              onClick={toggleMute}
+              className="h-8 w-8 p-0"
+            >
+              {volume === 0 ? (
+                <VolumeX className="h-5 w-5 text-muted-foreground" />
+              ) : (
+                <Volume2 className="h-5 w-5" />
+              )}
+            </Button>
             <Slider
               value={[volume]}
               max={1}
               step={0.01}
+              aria-label="Volume"
               onValueChange={handleVolumeChange}
               className="flex-1"
             />
           </div>
 
-          <Button onClick={handleDownload} variant="outline">
+          <Button onClick={handleDownload} variant="outline" aria-label={`Download ${title}`}>
             <Download className="h-4 w-4 mr-2" />
             Download
           </Button>
