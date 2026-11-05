@@ -1,0 +1,3 @@
+## 2025-05-18 - Audio Player Accessibility and Volume Control
+**Learning:** In custom media player components, icon-only playback buttons (play/pause, skip back, skip forward) and static volume icons lack accessible descriptions for screen readers and quick mute interactions for keyboard/mouse users. Range input sliders also require accessible labels to announce their purpose (seek position vs. volume) unambiguously.
+**Action:** Always provide dynamic `aria-label`s reflecting current playback/mute state on media action buttons, allow one-click mute/unmute toggling with volume memory, and specify clear `aria-label` attributes on seek and volume sliders.
